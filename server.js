@@ -4,7 +4,7 @@ const app = express();
 
 const PORT = 3001;
 
-const groupRoutes = require('./routes/groupRoutes');
+const groupRoutes = require('./Routes/groupRoutes');
 
 app.use(cors()); // 👈 THIS FIXES YOUR ERROR
 app.use(express.json());
