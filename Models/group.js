@@ -1,6 +1,10 @@
 class Group {
-    constructor(name) {
+    name = '';
+    id = null;
+
+    constructor(name, id) {
         this.name = name;
+        this.id = id;
     }
 }
 
