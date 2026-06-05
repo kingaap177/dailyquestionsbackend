@@ -23,7 +23,7 @@ class GroupRepo {
     }
   }
 
-  static async createGroup(groupName) {
+  static async addGroup(groupName) {
     try {
       const query = 'INSERT INTO `groups` (name) VALUES (?)';
       const [result] = await db.query(query, [groupName]);
