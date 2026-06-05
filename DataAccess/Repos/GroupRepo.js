@@ -45,16 +45,16 @@ class GroupRepo {
     }
   }
 
-  static async deleteGroup(groupId) {
-    try {
-      const query = 'DELETE FROM `groups` WHERE id = ?';
-      const [result] = await db.query(query, [groupId]);
-      return { id: groupId };
-    } catch (error) {
-      console.error(`Error deleting group with ID ${groupId}:`, error);
-      throw error;
-    }
-  }
+  // static async deleteGroup(groupId) {
+  //   try {
+  //     const query = 'DELETE FROM `groups` WHERE id = ?';
+  //     const [result] = await db.query(query, [groupId]);
+  //     return { id: groupId };
+  //   } catch (error) {
+  //     console.error(`Error deleting group with ID ${groupId}:`, error);
+  //     throw error;
+  //   }
+  // }
 }
 
 module.exports = GroupRepo;
