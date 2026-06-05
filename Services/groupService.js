@@ -1,4 +1,3 @@
-const Group = require('../Models/group');
 const GroupRepo = require('../DataAccess/Repos/GroupRepo');
 
 class GroupService {

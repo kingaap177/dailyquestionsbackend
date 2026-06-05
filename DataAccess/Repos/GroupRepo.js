@@ -15,10 +15,10 @@ class GroupRepo {
   static async getGroupById(groupId) {
     try {
       const query = 'SELECT * FROM `groups` WHERE id = ? LIMIT 1';
-      const [rows] = await db.query(query, [groupId, groupId]);
+      const [rows] = await db.query(query, [groupId]);
       return rows[0];
     } catch (error) {
-      console.error(`Error fetching group with ID or name ${groupId}:`, error);
+      console.error(`Error fetching group with ID ${groupId}:`, error);
       throw error;
     }
   }
@@ -37,7 +37,7 @@ class GroupRepo {
   static async updateGroup(groupId, groupName) {
     try {
       const query = 'UPDATE `groups` SET name = ? WHERE id = ?';
-      const [result] = await db.query(query, [groupName, groupId]);
+      await db.query(query, [groupName, groupId]);
       return { id: groupId, name: groupName };
     } catch (error) {
       console.error(`Error updating group with ID ${groupId}:`, error);
@@ -48,7 +48,7 @@ class GroupRepo {
   static async deleteGroup(groupId) {
     try {
       const query = 'DELETE FROM `groups` WHERE id = ?';
-      const [result] = await db.query(query, [groupId]);
+      await db.query(query, [groupId]);
       return { id: groupId };
     } catch (error) {
       console.error(`Error deleting group with ID ${groupId}:`, error);
