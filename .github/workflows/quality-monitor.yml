@@ -21,13 +21,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run ESLint
-        run: npm run lint
+        run: node ./node_modules/eslint/bin/eslint.js .
 
       - name: Check code formatting
-        run: npm run format:check
+        run: node ./node_modules/prettier/bin-prettier.js --check .
 
       - name: Run tests with coverage
         run: npm run test:coverage
