@@ -27,7 +27,7 @@ jobs:
         run: node ./node_modules/eslint/bin/eslint.js .
 
       - name: Check code formatting
-        run: node ./node_modules/prettier/bin-prettier.js --check .
+        run: node ./node_modules/prettier/bin/prettier.cjs --check .
 
       - name: Run tests with coverage
         run: npm run test:coverage
