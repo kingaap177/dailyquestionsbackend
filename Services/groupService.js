@@ -10,6 +10,14 @@ class GroupService {
         }
     }
 
+    async getGroupById(id) {
+        try {
+            return await GroupRepo.getGroupById(id);
+        } catch (error) {
+            throw new Error(`Error fetching group: ${error.message}`);
+        }
+    }
+
     async addGroup(name) {
         try {
             return await GroupRepo.addGroup(name);
