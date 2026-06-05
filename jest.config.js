@@ -9,16 +9,16 @@ module.exports = {
     'Models/**/*.js',
     '!node_modules/**',
     '!coverage/**',
-    '!Tests/**'
+    '!Tests/**',
   ],
   coverageThreshold: {
     global: {
       branches: 50,
       functions: 50,
       lines: 50,
-      statements: 50
-    }
+      statements: 50,
+    },
   },
   testMatch: ['**/Tests/**/*.test.js'],
-  verbose: true
+  verbose: true,
 };

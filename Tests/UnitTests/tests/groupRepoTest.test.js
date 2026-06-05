@@ -6,35 +6,28 @@ const db = require('../../../db');
 const GroupRepo = require('../../../DataAccess/Repos/GroupRepo');
 
 describe('GroupRepo', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
+  it('should return all groups', async () => {
+    const fakeRows = [
+      { id: 1, name: 'Study Group' },
+      { id: 2, name: 'Project Team' },
+    ];
 
-    it('should return all groups', async () => {
+    db.query.mockResolvedValue([fakeRows]);
 
-        const fakeRows = [
-            { id: 1, name: 'Study Group' },
-            { id: 2, name: 'Project Team' }
-        ];
+    const result = await GroupRepo.getAllGroups();
 
-        db.query.mockResolvedValue([fakeRows]);
+    expect(result).toEqual(fakeRows);
 
-        const result = await GroupRepo.getAllGroups();
+    expect(db.query).toHaveBeenCalledWith('SELECT * FROM `groups`');
+  });
 
-        expect(result).toEqual(fakeRows);
+  it('should throw error when db fails', async () => {
+    db.query.mockRejectedValue(new Error('DB error'));
 
-        expect(db.query).toHaveBeenCalledWith(
-            'SELECT * FROM `groups`'
-        );
-    });
-
-    it('should throw error when db fails', async () => {
-
-        db.query.mockRejectedValue(new Error('DB error'));
-
-        await expect(GroupRepo.getAllGroups())
-            .rejects
-            .toThrow('DB error');
-    });
+    await expect(GroupRepo.getAllGroups()).rejects.toThrow('DB error');
+  });
 });

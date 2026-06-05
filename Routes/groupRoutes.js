@@ -15,11 +15,11 @@ router.get('/group/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const group = await groupService.getGroupById(id);
-    
+
     if (!group) {
       return res.status(404).json({ error: 'Group not found' });
     }
-    
+
     res.json(group);
   } catch (error) {
     res.status(500).json({ error: error.message });

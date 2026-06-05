@@ -11,11 +11,11 @@ services:
       MYSQL_USER: devuser
       MYSQL_PASSWORD: devuser_password_123
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 20s
       retries: 10
 
@@ -31,7 +31,7 @@ services:
       DB_NAME: dailyquestions_db
       NODE_ENV: development
     ports:
-      - "3001:3001"
+      - '3001:3001'
     depends_on:
       mysql:
         condition: service_healthy

@@ -5,55 +5,46 @@ const GroupRepo = require('../../../DataAccess/Repos/GroupRepo');
 const GroupService = require('../../../Services/groupService');
 
 describe('GroupService', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    afterEach(() => {
-        jest.clearAllMocks();
+  describe('getAllGroups', () => {
+    it('returns all groups', async () => {
+      const mockGroups = [
+        { id: 1, name: 'Study Group' },
+        { id: 2, name: 'Project Team' },
+        { id: 3, name: 'Hobby Circle' },
+      ];
+
+      GroupRepo.getAllGroups.mockResolvedValue(mockGroups);
+
+      const groups = await GroupService.getAllGroups();
+
+      expect(groups).toHaveLength(3);
+      expect(groups.map(g => g.name)).toEqual(['Study Group', 'Project Team', 'Hobby Circle']);
+
+      expect(GroupRepo.getAllGroups).toHaveBeenCalledTimes(1);
     });
+  });
 
-    describe('getAllGroups', () => {
+  // describe('addGroup', () => {
 
-        it('returns all groups', async () => {
+  //     it('adds a new group and returns it', async () => {
 
-            const mockGroups = [
-                { id: 1, name: 'Study Group' },
-                { id: 2, name: 'Project Team' },
-                { id: 3, name: 'Hobby Circle' }
-            ];
+  //         const newGroup = {
+  //             id: 10,
+  //             name: 'New Study Group'
+  //         };
 
-            GroupRepo.getAllGroups.mockResolvedValue(mockGroups);
+  //         GroupRepo.addGroup.mockResolvedValue(newGroup);
 
-            const groups = await GroupService.getAllGroups();
+  //         const result = await GroupService.addGroup('New Study Group');
 
-            expect(groups).toHaveLength(3);
-            expect(groups.map(g => g.name)).toEqual([
-                'Study Group',
-                'Project Team',
-                'Hobby Circle'
-            ]);
+  //         expect(result).toEqual(newGroup);
 
-            expect(GroupRepo.getAllGroups).toHaveBeenCalledTimes(1);
-        });
+  //         expect(GroupRepo.addGroup).toHaveBeenCalledWith('New Study Group');
+  //     });
 
-    });
-
-    // describe('addGroup', () => {
-
-    //     it('adds a new group and returns it', async () => {
-
-    //         const newGroup = {
-    //             id: 10,
-    //             name: 'New Study Group'
-    //         };
-
-    //         GroupRepo.addGroup.mockResolvedValue(newGroup);
-
-    //         const result = await GroupService.addGroup('New Study Group');
-
-    //         expect(result).toEqual(newGroup);
-
-    //         expect(GroupRepo.addGroup).toHaveBeenCalledWith('New Study Group');
-    //     });
-
-    // });
-
+  // });
 });

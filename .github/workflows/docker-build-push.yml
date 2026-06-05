@@ -2,7 +2,7 @@ name: Build and Push Backend image
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   build-and-push:

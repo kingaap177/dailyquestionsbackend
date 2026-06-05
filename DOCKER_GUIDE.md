@@ -5,6 +5,7 @@
 Docker is a containerization tool that packages your application and its dependencies into isolated containers. Think of it as a lightweight virtual machine that ensures your app runs the same way everywhere.
 
 **Key concepts:**
+
 - **Image**: A blueprint/template for your container (like a recipe)
 - **Container**: A running instance of an image (like a cooked meal)
 - **docker-compose**: Allows you to run multiple containers together (backend + database)
@@ -21,14 +22,18 @@ Docker is a containerization tool that packages your application and its depende
 ## File Breakdown
 
 ### `docker-compose.yml`
+
 Defines two services:
+
 - **mysql**: Database container running MySQL 8.0
 - **backend**: Your Node.js application
 
 Environment variables are set here, so the backend can connect to MySQL.
 
 ### `Dockerfile`
+
 Instructions to build your Node.js application image:
+
 1. Start with Node.js 18 (alpine = lightweight version)
 2. Set working directory to `/app`
 3. Copy and install dependencies
@@ -37,6 +42,7 @@ Instructions to build your Node.js application image:
 6. Start the app with `npm start`
 
 ### `db.js`
+
 Database connection file - import this in your services to query the database.
 
 ## Step 1: Update package.json
@@ -69,12 +75,14 @@ docker-compose up
 ```
 
 This will:
+
 1. Download MySQL and Node images (first time only)
 2. Create containers and volumes
 3. Start both MySQL and your backend
 4. Your backend will be available at http://localhost:3001
 
 **To run in background:**
+
 ```powershell
 docker-compose up -d
 ```
@@ -119,6 +127,7 @@ module.exports = { getAllGroups };
 ## Database Credentials
 
 When running in Docker:
+
 - **Host**: `mysql` (docker-compose automatically resolves this)
 - **Port**: `3306`
 - **User**: `devuser`
@@ -164,18 +173,22 @@ docker-compose exec mysql mysql -u devuser -p dailyquestions_db
 ## Troubleshooting
 
 ### "Connection refused"
+
 - Wait a few seconds for MySQL to start
 - Check `docker-compose logs mysql` to see errors
 
 ### "Cannot find module 'mysql2'"
+
 - Run `npm install mysql2` in your project
 - Rebuild: `docker-compose up --build`
 
 ### Ports already in use
+
 - Change ports in docker-compose.yml (e.g., `3307:3306` for MySQL)
 - Or kill existing containers: `docker-compose down`
 
 ### Want to access MySQL directly?
+
 ```powershell
 docker-compose exec mysql mysql -u devuser -p -e "use dailyquestions_db; SHOW TABLES;"
 # Enter password: devuser_password_123
@@ -191,6 +204,7 @@ docker-compose exec mysql mysql -u devuser -p -e "use dailyquestions_db; SHOW TA
 ## Production Considerations
 
 Before deploying:
+
 - Use environment file: Create `.env` and use `env_file: .env` in docker-compose
 - Use strong passwords
 - Don't commit `.env` to git
