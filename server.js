@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
   res.send('Hello from your backend 🚀');
 });
 
-app.listen(PORT, () => {
-  console.info(`Server running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.info(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

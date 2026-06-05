@@ -6,6 +6,16 @@ const db = require('../../../db');
 const GroupRepo = require('../../../DataAccess/Repos/GroupRepo');
 
 describe('GroupRepo', () => {
+  let consoleErrorSpy;
+
+  beforeAll(() => {
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    consoleErrorSpy.mockRestore();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
