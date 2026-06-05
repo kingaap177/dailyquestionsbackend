@@ -13,7 +13,11 @@ describe('Auth integration tests', () => {
   });
 
   test('returns token-like response on valid login', async () => {
-    UserRepo.getUserByUsername.mockResolvedValue({ iduser: 1, username: 'testuser', password: 'password' });
+    UserRepo.getUserByUsername.mockResolvedValue({
+      iduser: 1,
+      username: 'testuser',
+      password: 'password',
+    });
 
     const res = await request(app)
       .post('/api/auth/login')
@@ -25,10 +29,7 @@ describe('Auth integration tests', () => {
   });
 
   test('returns 400 when missing credentials', async () => {
-    const res = await request(app)
-      .post('/api/auth/login')
-      .send({ username: '' })
-      .expect(400);
+    const res = await request(app).post('/api/auth/login').send({ username: '' }).expect(400);
 
     expect(res.body).toHaveProperty('error');
   });
