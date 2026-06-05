@@ -14,11 +14,11 @@ class GroupRepo {
 
   static async getGroupById(groupId) {
     try {
-      const query = 'SELECT * FROM `groups` WHERE id = ?';
-      const [rows] = await db.query(query, [groupId]);
+      const query = 'SELECT * FROM `groups` WHERE id = ? LIMIT 1';
+      const [rows] = await db.query(query, [groupId, groupId]);
       return rows[0];
     } catch (error) {
-      console.error(`Error fetching group with ID ${groupId}:`, error);
+      console.error(`Error fetching group with ID or name ${groupId}:`, error);
       throw error;
     }
   }
