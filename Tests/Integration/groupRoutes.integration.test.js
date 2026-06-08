@@ -75,30 +75,21 @@ describe('Group Routes Integration Tests', () => {
       const newGroup = { id: 3, name: 'New Group' };
       GroupRepo.addGroup.mockResolvedValue(newGroup);
 
-      const res = await request(app)
-        .post('/api/group')
-        .send({ name: 'New Group' })
-        .expect(201);
+      const res = await request(app).post('/api/group').send({ name: 'New Group' }).expect(201);
 
       expect(res.body).toEqual(newGroup);
       expect(GroupRepo.addGroup).toHaveBeenCalledWith('New Group');
     });
 
     it('returns 400 when group name is missing', async () => {
-      const res = await request(app)
-        .post('/api/group')
-        .send({})
-        .expect(400);
+      const res = await request(app).post('/api/group').send({}).expect(400);
 
       expect(res.body).toHaveProperty('error', 'Group name is required');
       expect(GroupRepo.addGroup).not.toHaveBeenCalled();
     });
 
     it('returns 400 when group name is empty string', async () => {
-      const res = await request(app)
-        .post('/api/group')
-        .send({ name: '' })
-        .expect(400);
+      const res = await request(app).post('/api/group').send({ name: '' }).expect(400);
 
       expect(res.body).toHaveProperty('error', 'Group name is required');
     });
@@ -119,10 +110,7 @@ describe('Group Routes Integration Tests', () => {
       const newGroup = { id: 4, name: specialName };
       GroupRepo.addGroup.mockResolvedValue(newGroup);
 
-      const res = await request(app)
-        .post('/api/group')
-        .send({ name: specialName })
-        .expect(201);
+      const res = await request(app).post('/api/group').send({ name: specialName }).expect(201);
 
       expect(res.body).toEqual(newGroup);
       expect(GroupRepo.addGroup).toHaveBeenCalledWith(specialName);

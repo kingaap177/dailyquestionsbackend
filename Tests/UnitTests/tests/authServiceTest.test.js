@@ -31,9 +31,9 @@ describe('AuthService', () => {
     it('throws error when user not found', async () => {
       UserRepo.getUserByUsername.mockResolvedValue(null);
 
-      await expect(
-        AuthService.login('nonexistent', 'password')
-      ).rejects.toThrow('Ongeldige gebruikersnaam of wachtwoord');
+      await expect(AuthService.login('nonexistent', 'password')).rejects.toThrow(
+        'Ongeldige gebruikersnaam of wachtwoord'
+      );
     });
 
     it('throws error when password is incorrect', async () => {
@@ -45,17 +45,15 @@ describe('AuthService', () => {
 
       UserRepo.getUserByUsername.mockResolvedValue(mockUser);
 
-      await expect(
-        AuthService.login('testuser', 'wrongpassword')
-      ).rejects.toThrow('Ongeldige gebruikersnaam of wachtwoord');
+      await expect(AuthService.login('testuser', 'wrongpassword')).rejects.toThrow(
+        'Ongeldige gebruikersnaam of wachtwoord'
+      );
     });
 
     it('throws error when UserRepo fails', async () => {
       UserRepo.getUserByUsername.mockRejectedValue(new Error('Database error'));
 
-      await expect(
-        AuthService.login('testuser', 'password')
-      ).rejects.toThrow('Database error');
+      await expect(AuthService.login('testuser', 'password')).rejects.toThrow('Database error');
     });
   });
 });
