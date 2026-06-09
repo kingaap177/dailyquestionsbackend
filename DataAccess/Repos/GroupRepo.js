@@ -3,7 +3,7 @@ const db = require('../../db');
 class GroupRepo {
   static async getAllGroups() {
     try {
-      const query = 'SELECT * FROM `groups`';
+      const query = 'SELECT * FROM `groepen`';
       const [rows] = await db.query(query);
       return rows;
     } catch (error) {
@@ -14,7 +14,7 @@ class GroupRepo {
 
   static async getGroupById(groupId) {
     try {
-      const query = 'SELECT * FROM `groups` WHERE id = ? LIMIT 1';
+      const query = 'SELECT * FROM `groepen` WHERE id = ? LIMIT 1';
       const [rows] = await db.query(query, [groupId]);
       return rows[0];
     } catch (error) {
@@ -25,7 +25,7 @@ class GroupRepo {
 
   static async addGroup(groupName) {
     try {
-      const query = 'INSERT INTO `groups` (name) VALUES (?)';
+      const query = 'INSERT INTO `groepen` (name) VALUES (?)';
       const [result] = await db.query(query, [groupName]);
       return { id: result.insertId, name: groupName };
     } catch (error) {
@@ -36,7 +36,7 @@ class GroupRepo {
 
   static async updateGroup(groupId, groupName) {
     try {
-      const query = 'UPDATE `groups` SET name = ? WHERE id = ?';
+      const query = 'UPDATE `groepen` SET name = ? WHERE id = ?';
       await db.query(query, [groupName, groupId]);
       return { id: groupId, name: groupName };
     } catch (error) {
@@ -47,7 +47,7 @@ class GroupRepo {
 
   static async deleteGroup(groupId) {
     try {
-      const query = 'DELETE FROM `groups` WHERE id = ?';
+      const query = 'DELETE FROM `groepen` WHERE id = ?';
       await db.query(query, [groupId]);
       return { id: groupId };
     } catch (error) {
