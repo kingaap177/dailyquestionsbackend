@@ -32,7 +32,7 @@ describe('GroupRepo', () => {
 
     expect(result).toEqual(fakeRows);
 
-    expect(db.query).toHaveBeenCalledWith('SELECT * FROM `groups`');
+    expect(db.query).toHaveBeenCalledWith('SELECT * FROM `groepen`');
   });
 
   it('should throw error when db fails', async () => {

@@ -27,7 +27,7 @@ describe('GroupRepo - Comprehensive', () => {
       const result = await GroupRepo.getGroupById(1);
 
       expect(result).toEqual(mockGroup);
-      expect(db.query).toHaveBeenCalledWith('SELECT * FROM `groups` WHERE id = ? LIMIT 1', [1]);
+      expect(db.query).toHaveBeenCalledWith('SELECT * FROM `groepen` WHERE id = ? LIMIT 1', [1]);
     });
 
     it('returns undefined when group not found', async () => {
@@ -52,7 +52,7 @@ describe('GroupRepo - Comprehensive', () => {
       const result = await GroupRepo.addGroup('New Group');
 
       expect(result).toEqual({ id: 5, name: 'New Group' });
-      expect(db.query).toHaveBeenCalledWith('INSERT INTO `groups` (name) VALUES (?)', [
+      expect(db.query).toHaveBeenCalledWith('INSERT INTO `groepen` (name) VALUES (?)', [
         'New Group',
       ]);
     });
@@ -80,7 +80,7 @@ describe('GroupRepo - Comprehensive', () => {
       const result = await GroupRepo.updateGroup(1, 'Updated Group');
 
       expect(result).toEqual({ id: 1, name: 'Updated Group' });
-      expect(db.query).toHaveBeenCalledWith('UPDATE `groups` SET name = ? WHERE id = ?', [
+      expect(db.query).toHaveBeenCalledWith('UPDATE `groepen` SET name = ? WHERE id = ?', [
         'Updated Group',
         1,
       ]);
@@ -100,7 +100,7 @@ describe('GroupRepo - Comprehensive', () => {
       const result = await GroupRepo.deleteGroup(1);
 
       expect(result).toEqual({ id: 1 });
-      expect(db.query).toHaveBeenCalledWith('DELETE FROM `groups` WHERE id = ?', [1]);
+      expect(db.query).toHaveBeenCalledWith('DELETE FROM `groepen` WHERE id = ?', [1]);
     });
 
     it('throws error when database fails', async () => {
