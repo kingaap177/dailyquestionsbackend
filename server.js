@@ -7,10 +7,12 @@ const PORT = 3001;
 const authRoutes = require('./Routes/authRoutes');
 const groupRoutes = require('./Routes/groupRoutes');
 
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://your-vercel-domain.vercel.app'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'https://your-vercel-domain.vercel.app'],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
