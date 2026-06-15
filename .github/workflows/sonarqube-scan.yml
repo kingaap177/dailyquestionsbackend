@@ -26,13 +26,15 @@ jobs:
         run: npm run test:coverage
 
       - name: Run SonarQube analysis
-        uses: docker://sonarsource/sonar-scanner-cli:latest
-        with:
-          args: >
-            -Dsonar.projectKey=dailyquestionsbackend
-            -Dsonar.projectName=DailyQuestions Backend
-            -Dsonar.sources=.
-            -Dsonar.exclusions=node_modules/**,coverage/**,**/*.test.js,**/*.spec.js
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.host.url=http://localhost:9000
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        shell: cmd
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner ^
+            -Dsonar.projectKey=dailyquestionsbackend ^
+            -Dsonar.projectName="DailyQuestions Backend" ^
+            -Dsonar.sources=. ^
+            -Dsonar.exclusions=node_modules/**,coverage/**,**/*.test.js,**/*.spec.js ^
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info ^
+            -Dsonar.host.url=http://localhost:9000 ^
+            -Dsonar.login=%SONAR_TOKEN%
