@@ -30,7 +30,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner ^
+          "C:\Users\stijn\Downloads\sonar-scanner-cli-4.8.0.2856\sonar-scanner-4.8.0.2856\bin\sonar-scanner.bat" ^
             -Dsonar.projectKey=dailyquestionsbackend ^
             -Dsonar.projectName="DailyQuestions Backend" ^
             -Dsonar.sources=. ^
