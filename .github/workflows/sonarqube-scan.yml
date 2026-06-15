@@ -1,0 +1,38 @@
+name: SonarQube Scan - Backend
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  sonarqube:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Run SonarQube analysis
+        uses: docker://sonarsource/sonar-scanner-cli:latest
+        with:
+          args: >
+            -Dsonar.projectKey=dailyquestionsbackend
+            -Dsonar.projectName=DailyQuestions Backend
+            -Dsonar.sources=.
+            -Dsonar.exclusions=node_modules/**,coverage/**,**/*.test.js,**/*.spec.js
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.host.url=http://localhost:9000
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}

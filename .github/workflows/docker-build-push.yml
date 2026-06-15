@@ -1,21 +1,21 @@
-name: Build and Push Backend image
+name: Build and load backend Docker image locally
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, dev, master]
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Railway
-        uses: railway-app/railway-action@v1
-        with:
-          token: ${{ secrets.RAILWAY_TOKEN }}
-          service: dailyquestionsbackend
-          inputs: DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_NAME=${{ secrets.DB_NAME }}
-        env:
-          RAILWAY_CLI_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Build Docker image
+        run: |
+          docker build -t dailyquestionsbackend:latest .
+
+      - name: Verify local Docker image
+        run: |
+          docker images dailyquestionsbackend:latest
+
