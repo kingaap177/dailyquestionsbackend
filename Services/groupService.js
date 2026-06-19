@@ -24,6 +24,22 @@ class GroupService {
       throw new Error(`Error adding group: ${error.message}`);
     }
   }
+
+  async updateGroup(id, name) {
+    try {
+      return await GroupRepo.updateGroup(id, name);
+    } catch (error) {
+      throw new Error(`Error updating group: ${error.message}`);
+    }
+  }
+
+  async deleteGroup(id) {
+    try {
+      return await GroupRepo.deleteGroup(id);
+    } catch (error) {
+      throw new Error(`Error deleting group: ${error.message}`);
+    }
+  }
 }
 
 module.exports = new GroupService();

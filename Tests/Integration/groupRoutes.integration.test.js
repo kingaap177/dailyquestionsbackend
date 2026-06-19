@@ -116,4 +116,58 @@ describe('Group Routes Integration Tests', () => {
       expect(GroupRepo.addGroup).toHaveBeenCalledWith(specialName);
     });
   });
+
+  describe('PUT /api/group/:id', () => {
+    it('updates a group name', async () => {
+      const existingGroup = { id: 1, name: 'Study Group' };
+      const updatedGroup = { id: 1, name: 'Updated Study Group' };
+
+      GroupRepo.getGroupById.mockResolvedValue(existingGroup);
+      GroupRepo.updateGroup.mockResolvedValue(updatedGroup);
+
+      const res = await request(app)
+        .put('/api/group/1')
+        .send({ name: 'Updated Study Group' })
+        .expect(200);
+
+      expect(res.body).toEqual(updatedGroup);
+      expect(GroupRepo.getGroupById).toHaveBeenCalledWith('1');
+      expect(GroupRepo.updateGroup).toHaveBeenCalledWith('1', 'Updated Study Group');
+    });
+
+    it('returns 400 when update name is missing', async () => {
+      const res = await request(app).put('/api/group/1').send({}).expect(400);
+
+      expect(res.body).toHaveProperty('error', 'Group name is required');
+    });
+
+    it('returns 404 when group does not exist', async () => {
+      GroupRepo.getGroupById.mockResolvedValue(null);
+
+      const res = await request(app).put('/api/group/999').send({ name: 'Does not matter' }).expect(404);
+
+      expect(res.body).toHaveProperty('error', 'Group not found');
+    });
+  });
+
+  describe('DELETE /api/group/:id', () => {
+    it('deletes a group and returns 204', async () => {
+      const existingGroup = { id: 1, name: 'Study Group' };
+      GroupRepo.getGroupById.mockResolvedValue(existingGroup);
+      GroupRepo.deleteGroup.mockResolvedValue({ id: 1 });
+
+      await request(app).delete('/api/group/1').expect(204);
+      expect(GroupRepo.getGroupById).toHaveBeenCalledWith('1');
+      expect(GroupRepo.deleteGroup).toHaveBeenCalledWith('1');
+    });
+
+    it('returns 404 when deleting a non-existing group', async () => {
+      GroupRepo.getGroupById.mockResolvedValue(null);
+
+      const res = await request(app).delete('/api/group/999').expect(404);
+
+      expect(res.body).toHaveProperty('error', 'Group not found');
+      expect(GroupRepo.deleteGroup).not.toHaveBeenCalled();
+    });
+  });
 });
