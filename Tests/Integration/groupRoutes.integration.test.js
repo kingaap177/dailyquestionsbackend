@@ -144,7 +144,10 @@ describe('Group Routes Integration Tests', () => {
     it('returns 404 when group does not exist', async () => {
       GroupRepo.getGroupById.mockResolvedValue(null);
 
-      const res = await request(app).put('/api/group/999').send({ name: 'Does not matter' }).expect(404);
+      const res = await request(app)
+        .put('/api/group/999')
+        .send({ name: 'Does not matter' })
+        .expect(404);
 
       expect(res.body).toHaveProperty('error', 'Group not found');
     });
